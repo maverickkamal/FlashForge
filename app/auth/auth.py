@@ -1,6 +1,7 @@
 import uuid
 from datetime import datetime, timedelta
 from typing import Optional
+import os
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -12,7 +13,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.auth.models import User
 from app.config import settings
-from app.db.database import get_db
+from app.db.database import get_db, supabase
 
 # JWT token configuration
 SECRET_KEY = settings.SECRET_KEY
@@ -53,9 +54,31 @@ def get_password_hash(password):
     return pwd_context.hash(password)
 
 async def get_user_by_email(db: AsyncSession, email: str):
-    """Get a user by email"""
+    """Get a user by email from SQLite or Supabase"""
+    # First try SQLite through SQLAlchemy
     result = await db.execute(select(User).where(User.email == email))
-    return result.scalar_one_or_none()
+    user = result.scalar_one_or_none()
+    
+    # If user not found in SQLite, try Supabase
+    if user is None and not os.getenv("USE_SQLITE", "false").lower() == "true" and supabase:
+        try:
+            response = supabase.table('users').select('*').eq('email', email).execute()
+            if response.data and len(response.data) > 0:
+                user_data = response.data[0]
+                # Create a User object from Supabase data
+                user = User(
+                    id=user_data.get('id'),
+                    email=user_data.get('email'),
+                    hashed_password=user_data.get('hashed_password'),
+                    is_active=user_data.get('is_active', True),
+                    is_superuser=user_data.get('is_superuser', False),
+                    is_verified=user_data.get('is_verified', False)
+                )
+                print(f"User found in Supabase: {user.email}")
+        except Exception as e:
+            print(f"Error checking Supabase for user: {e}")
+    
+    return user
 
 async def authenticate_user(db: AsyncSession, email: str, password: str):
     """Authenticate a user by email and password"""
