@@ -18,3 +18,14 @@ class User(Base):
     is_active = Column(Boolean, default=True, nullable=False)
     is_superuser = Column(Boolean, default=False, nullable=False)
     is_verified = Column(Boolean, default=False, nullable=False)
+    
+    # Convert to dict for Supabase API
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "email": self.email,
+            "hashed_password": self.hashed_password,
+            "is_active": self.is_active,
+            "is_superuser": self.is_superuser,
+            "is_verified": self.is_verified
+        }
