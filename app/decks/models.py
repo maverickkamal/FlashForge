@@ -11,8 +11,8 @@ class Deck(Base):
     name = Column(String, nullable=False)
     user_id = Column(String(36), ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     
-    # Relationship to flashcards - will be defined once we implement flashcards
-    # flashcards = relationship("Flashcard", back_populates="deck", cascade="all, delete-orphan")
+    # Relationship to flashcards
+    flashcards = relationship("Flashcard", back_populates="deck", cascade="all, delete-orphan")
     
     # Convert to dict for Supabase API
     def to_dict(self):
