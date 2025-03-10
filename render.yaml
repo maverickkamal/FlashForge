@@ -1,9 +1,8 @@
 services:
-  # A Docker web service
   - type: web
-    name: fastapi-example
+    name: FlashForge
     runtime: python
     plan: free
-    autoDeploy: false
+    autoDeploy: true
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
