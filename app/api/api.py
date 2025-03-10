@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from app.auth.router import auth_router
 from app.decks.router import decks_router
 from app.flashcards.router import flashcards_router
+from app.AI.router import ai_router
 
 # Main API router
 api_router = APIRouter()
@@ -16,5 +17,5 @@ api_router.include_router(decks_router)
 # Include flashcard routes
 api_router.include_router(flashcards_router)
 
-# Later we will include routes for AI generation
-# api_router.include_router(ai_router)
+# Include AI routes
+api_router.include_router(ai_router)
