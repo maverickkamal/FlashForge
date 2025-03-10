@@ -38,10 +38,7 @@ async def generate_flashcards(
         string: JSON string containing the generated flashcards
     """
     # Generate prompt for FlashForge
-    print("before prompt")
     prompt = [prompt_flashforge(input_types, number, input_content)]
-    print(prompt)
-    print("after prompt")
     
     # Load images or documents if provided
     if files:
