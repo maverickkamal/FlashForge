@@ -11,3 +11,6 @@ asyncpg>=0.28.0
 supabase>=1.2.0
 aiosqlite>=0.20.0
 email-validator>=2.0.0
+google-generativeai>=0.3.2
+pillow>=10.0.0
+python-multipart>=0.0.6
