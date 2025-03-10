@@ -5,8 +5,8 @@ from typing import Dict, Any, List, Optional
 
 # Configuration
 API_BASE_URL = "http://localhost:8000/api/v1"
-EMAIL = "tammielews@gmail.com"  # Fill in your credentials
-PASSWORD = "Kamaludeen@1"  # Fill in your credentials
+EMAIL = "test email"  # Fill in your credentials
+PASSWORD = "test password"  # Fill in your credentials
 
 class DeckApiTester:
     """Test the decks API endpoints"""
