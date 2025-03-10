@@ -12,11 +12,9 @@ from app.config import settings
 supabase = None
 supabase_connected = False
 
-# Try to establish Supabase API connection
 if settings.SUPABASE_URL and settings.SUPABASE_KEY and "your-project-id" not in settings.SUPABASE_URL:
     try:
         supabase = create_client(settings.SUPABASE_URL, settings.SUPABASE_KEY)
-        # Test connection with a simple call
         test_response = supabase.from_("users").select("*", count="exact").limit(1).execute()
         supabase_connected = True
         print(f"Successfully connected to Supabase API at {settings.SUPABASE_URL}")
@@ -28,7 +26,6 @@ if settings.SUPABASE_URL and settings.SUPABASE_KEY and "your-project-id" not in 
 DATABASE_URL = "sqlite+aiosqlite:///./test.db"
 print("Using SQLite database for local ORM operations")
 
-# Create SQLAlchemy engine with basic configuration
 engine = create_async_engine(
     DATABASE_URL,
     echo=False,
@@ -40,10 +37,8 @@ AsyncSessionLocal = sessionmaker(
     expire_on_commit=False
 )
 
-# Base class for all database models
 Base = declarative_base()
 
-# Database dependency function
 async def get_db():
     async with AsyncSessionLocal() as session:
         try:
