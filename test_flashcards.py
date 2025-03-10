@@ -16,8 +16,8 @@ import aiohttp
 API_BASE = "http://localhost:8000/api/v1"
 
 # Test user credentials
-TEST_EMAIL = "tammielews@gmail.com"
-TEST_PASSWORD = "Kamaludeen@1"
+TEST_EMAIL = "test email"
+TEST_PASSWORD = "test password"
 
 # Test data
 test_deck = {"name": "Test Flashcard Deck"}
