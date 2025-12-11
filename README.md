@@ -25,7 +25,7 @@ FlashForge is an AI-powered flashcard management API that helps users create, or
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/FlashForge.git
+   git clone https://github.com/maverickkamal/FlashForge.git
    cd FlashForge
    ```
 
